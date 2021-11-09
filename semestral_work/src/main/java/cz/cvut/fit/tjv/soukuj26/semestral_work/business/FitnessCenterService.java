@@ -16,16 +16,18 @@ public class FitnessCenterService {
 
     public FitnessCenterService() {}
 
-    public void create(FitnessCenter fitnessCenter) throws Exception {
-        if (Objects.equals(fitnessCenter.getName(), "fitko")) {
+    public FitnessCenter create(FitnessCenter fitnessCenter) throws Exception {
+        if (Objects.equals(fitnessCenter.getName(), "fit")) {
             throw new Exception();
         }
+        return new FitnessCenter(fitnessCenter.getName(), fitnessCenter.getType());
     }
 
-    public void update(FitnessCenter fitnessCenter) throws Exception {
+    public FitnessCenter update(FitnessCenter fitnessCenter) throws Exception {
         if (Objects.equals(fitnessCenter.getName(), "fitko")) {
-            throw new Exception();
+            return new FitnessCenter(fitnessCenter.getName(), fitnessCenter.getType());
         }
+        throw new Exception();
 
     }
 
@@ -46,8 +48,9 @@ public class FitnessCenterService {
     }
 
     public void delete(String city) throws Exception {
-        if (Objects.equals(city, "praha")) {
-            throw new Exception();
+        if (Objects.equals(city, "fitko")) {
+            return;
         }
+        throw new Exception();
     }
 }

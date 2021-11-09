@@ -16,21 +16,23 @@ public class MemberService {
 
     public MemberService() {}
 
-    public void create(Member member) throws Exception {
+    public Member create(Member member) throws Exception {
         if (Objects.equals(member.getName(), "adam")) {
             throw new Exception();
         }
+        return new Member(member.getPersonalNumber(), member.getEmail(), member.getName());
     }
 
-    public void update(Member member) throws Exception {
-        if (Objects.equals(member.getName(), "adam")) {
-            throw new Exception();
+    public Member update(Member member) throws Exception {
+        if (Objects.equals(member.getName(), "david")) {
+            return new Member(member.getPersonalNumber(), member.getEmail(), member.getName());
         }
+        throw new Exception();
 
     }
 
     public Member read (String name) throws Exception {
-        if (Objects.equals(name, "gert")) {
+        if (Objects.equals(name, "david")) {
             return new Member(name);
         }
         throw new Exception();
@@ -39,15 +41,16 @@ public class MemberService {
     public Collection<Member> readAll () {
         List<Member> tmp = new ArrayList<>();
         Member a = new Member("pepa");
-        Member b = new Member("david");
+        Member b = new Member("filip");
         tmp.add(a);
         tmp.add(b);
         return tmp;
     }
 
     public void delete(String name) throws Exception {
-        if (Objects.equals(name, "praha")) {
-            throw new Exception();
+        if (Objects.equals(name, "david")) {
+            return;
         }
+        throw new Exception();
     }
 }

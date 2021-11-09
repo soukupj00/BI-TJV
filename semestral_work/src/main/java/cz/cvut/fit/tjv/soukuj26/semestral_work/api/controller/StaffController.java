@@ -24,20 +24,6 @@ public class StaffController {
         return StaffConverter.fromModelMany(staffService.readAll());
     }
 
-    @PostMapping("/staff")
-    public StaffDto newStaff(@RequestBody StaffDto newStaff) {
-        try {
-            Staff staffModel = StaffConverter.toModel(newStaff);
-            this.staffService.create(staffModel);
-            //staffModel = this.staffService.read(staffModel.getName());
-            return StaffConverter.fromModel(staffModel);
-        } catch (NullPointerException n) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-    }
-
     @GetMapping("/staff/{id}")
     public StaffDto one(@PathVariable String id) {
         try {
@@ -47,25 +33,37 @@ public class StaffController {
         }
     }
 
+    @PostMapping("/staff")
+    public StaffDto newStaff(@RequestBody StaffDto newStaff) {
+        try {
+            Staff staffModel = StaffConverter.toModel(newStaff);
+            this.staffService.create(staffModel);
+            return StaffConverter.fromModel(staffModel);
+        } catch (NullPointerException n) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
+        }
+    }
+
     @PutMapping("/staff/{id}")
     StaffDto updateStaff(@RequestBody StaffDto staffDto, @PathVariable String id) {
         try {
-            staffService.read(id);
+            StaffConverter.fromModel(staffService.read(id));
+            Staff staff = StaffConverter.toModel(staffDto);
+            staffService.update(staff);
+            return StaffConverter.fromModel(staff);
+        } catch (NullPointerException n) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        Staff staff = StaffConverter.toModel(staffDto);
-        try {
-            this.staffService.update(staff);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return staffDto;
     }
 
     @DeleteMapping("/staff/{id}")
     public void deleteStaff(@PathVariable String id) {
         try {
+            StaffConverter.fromModel(staffService.read(id));
             staffService.delete(id);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);

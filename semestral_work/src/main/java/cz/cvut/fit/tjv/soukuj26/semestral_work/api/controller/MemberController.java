@@ -1,6 +1,7 @@
 package cz.cvut.fit.tjv.soukuj26.semestral_work.api.controller;
 
 import cz.cvut.fit.tjv.soukuj26.semestral_work.api.converter.MemberConverter;
+import cz.cvut.fit.tjv.soukuj26.semestral_work.api.converter.StaffConverter;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.api.dtos.MemberDto;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.business.MemberService;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.Member;
@@ -23,23 +24,23 @@ public class MemberController {
         return MemberConverter.fromModelMany(memberService.readAll());
     }
 
-    @PostMapping("/member")
-    public MemberDto newMember(@RequestBody MemberDto newMember) {
-        Member member = MemberConverter.toModel(newMember);
-        try {
-            this.memberService.create(member);
-            member = this.memberService.read(member.getName());
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return MemberConverter.fromModel(member);
-    }
-
     @GetMapping("/member/{id}")
     public MemberDto one(@PathVariable String id) {
         try {
-            return MemberConverter.fromModel(
-                    memberService.read(id));
+            return MemberConverter.fromModel(memberService.read(id));
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/member")
+    public MemberDto newMember(@RequestBody MemberDto newMember) {
+        try {
+            Member member = MemberConverter.toModel(newMember);
+            memberService.create(member);
+            return MemberConverter.fromModel(member);
+        } catch (NullPointerException n) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -49,21 +50,20 @@ public class MemberController {
     MemberDto updateMember(@RequestBody MemberDto memberDto, @PathVariable String id) {
         try {
             memberService.read(id);
+            Member member = MemberConverter.toModel(memberDto);
+            memberService.update(member);
+            return MemberConverter.fromModel(member);
+        } catch (NullPointerException n) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        Member member = MemberConverter.toModel(memberDto);
-        try {
-            this.memberService.update(member);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return memberDto;
     }
 
     @DeleteMapping("/member/{id}")
     public void deleteMember(@PathVariable String id) {
         try {
+            MemberConverter.fromModel(memberService.read(id));
             memberService.delete(id);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);

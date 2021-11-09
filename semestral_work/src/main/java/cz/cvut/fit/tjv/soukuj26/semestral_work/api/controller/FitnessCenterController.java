@@ -23,18 +23,6 @@ public class FitnessCenterController {
         return FitnessCenterConverter.fromModelMany(fitnessCenterService.readAll());
     }
 
-    @PostMapping("/fitness_centers")
-    public FitnessCenterDto newAddress(@RequestBody FitnessCenterDto fitnessCenterDto) {
-        FitnessCenter fitnessCenterModel = FitnessCenterConverter.toModel(fitnessCenterDto);
-        try {
-            this.fitnessCenterService.create(fitnessCenterModel);
-            fitnessCenterModel = this.fitnessCenterService.read(fitnessCenterModel.getName());
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return FitnessCenterConverter.fromModel(fitnessCenterModel);
-    }
-
     @GetMapping("/fitness_centers/{id}")
     public FitnessCenterDto one(@PathVariable String id) {
         try {
@@ -44,25 +32,37 @@ public class FitnessCenterController {
         }
     }
 
+    @PostMapping("/fitness_centers")
+    public FitnessCenterDto newAddress(@RequestBody FitnessCenterDto fitnessCenterDto) {
+        try {
+            FitnessCenter fitnessCenterModel = FitnessCenterConverter.toModel(fitnessCenterDto);
+            fitnessCenterService.create(fitnessCenterModel);
+            return FitnessCenterConverter.fromModel(fitnessCenterModel);
+        } catch (NullPointerException n) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
+        }catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PutMapping("/fitness_centers/{id}")
     FitnessCenterDto updateFitnessCenter(@RequestBody FitnessCenterDto fitnessCenterDto, @PathVariable String id) {
         try {
-            fitnessCenterService.read(id);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        FitnessCenter fitnessCenter = FitnessCenterConverter.toModel(fitnessCenterDto);
-        try {
+            FitnessCenterConverter.fromModel(fitnessCenterService.read(id));
+            FitnessCenter fitnessCenter = FitnessCenterConverter.toModel(fitnessCenterDto);
             this.fitnessCenterService.update(fitnessCenter);
+            return FitnessCenterConverter.fromModel(fitnessCenter);
+        } catch (NullPointerException n) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return fitnessCenterDto;
     }
 
     @DeleteMapping("/fitness_centers/{id}")
     public void deleteFitnessCenter(@PathVariable String id) {
         try {
+            FitnessCenterConverter.fromModel(fitnessCenterService.read(id));
             fitnessCenterService.delete(id);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);

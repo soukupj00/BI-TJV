@@ -16,21 +16,23 @@ public class StaffService {
 
     public StaffService() {}
 
-    public void create(Staff staff) throws Exception {
+    public Staff create(Staff staff) throws Exception {
         if (Objects.equals(staff.getName(), "adam")) {
             throw new Exception();
         }
+        return new Staff(staff.getPersonalNumber(), staff.getName(), staff.getLanguage(), staff.getSalary());
     }
 
-    public void update(Staff staff) throws Exception {
-        if (Objects.equals(staff.getName(), "adam")) {
-            throw new Exception();
+    public Staff update(Staff staff) throws Exception {
+        if (Objects.equals(staff.getName(), "david")) {
+            return new Staff(staff.getPersonalNumber(), staff.getName(), staff.getLanguage(), staff.getSalary());
         }
+        throw new Exception();
 
     }
 
     public Staff read (String name) throws Exception {
-        if (Objects.equals(name, "gert")) {
+        if (Objects.equals(name, "david")) {
             return new Staff(name);
         }
         throw new Exception();
@@ -38,8 +40,8 @@ public class StaffService {
 
     public Collection<Staff> readAll () {
         List<Staff> tmp = new ArrayList<>();
-        Staff a = new Staff("pepa");
-        Staff b = new Staff("david");
+        Staff a = new Staff("anotherone");
+        Staff b = new Staff("someone");
         tmp.add(a);
         tmp.add(b);
         return tmp;
@@ -47,7 +49,8 @@ public class StaffService {
 
     public void delete(String name) throws Exception {
         if (Objects.equals(name, "david")) {
-            throw new Exception();
+            return;
         }
+        throw new Exception();
     }
 }

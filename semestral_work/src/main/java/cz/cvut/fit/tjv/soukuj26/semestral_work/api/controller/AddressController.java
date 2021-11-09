@@ -37,13 +37,12 @@ public class AddressController {
     public AddressDto newAddress(@RequestBody AddressDto addressDto) {
         try {
             Address addressModel = AddressConverter.toModel(addressDto);
-            this.addressService.create(addressModel);
+            addressService.create(addressModel);
             return AddressConverter.fromModel(addressModel);
         } catch (NullPointerException n) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        }
-        catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
         }
     }
 
