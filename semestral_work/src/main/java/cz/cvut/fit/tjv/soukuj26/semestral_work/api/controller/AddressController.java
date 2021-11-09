@@ -16,23 +16,13 @@ public class AddressController {
 
     public AddressController(AddressService addressService) {this.addressService = addressService;}
 
+    //Gets all addresses from TODO database
     @GetMapping("/addresses")
     public Collection<AddressDto> all() {
         return AddressConverter.fromModelMany(addressService.readAll());
     }
 
-    @PostMapping("/addresses")
-    public AddressDto newAddress(@RequestBody AddressDto newAddress) {
-        Address addressModel = AddressConverter.toModel(newAddress);
-        try {
-            this.addressService.create(addressModel);
-            addressModel = this.addressService.read(addressModel.getCity());
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return AddressConverter.fromModel(addressModel);
-    }
-
+    //Gets AddressDTO with corresponding id from TODO database
     @GetMapping("/addresses/{id}")
     public AddressDto one(@PathVariable String id) {
         try {
@@ -42,25 +32,40 @@ public class AddressController {
         }
     }
 
+    //Creates new address
+    @PostMapping("/addresses")
+    public AddressDto newAddress(@RequestBody AddressDto addressDto) {
+        try {
+            Address addressModel = AddressConverter.toModel(addressDto);
+            this.addressService.create(addressModel);
+            return AddressConverter.fromModel(addressModel);
+        } catch (NullPointerException n) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
+        }
+        catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    //Updates address with corresponding id
     @PutMapping("/addresses/{id}")
-    AddressDto updateAddress(@RequestBody AddressDto addressDto, @PathVariable String id) {
+    public AddressDto updateAddress(@RequestBody AddressDto addressDto, @PathVariable String id) {
         try {
-            addressService.read(id);
+            AddressConverter.fromModel(addressService.read(id));
+            Address address = AddressConverter.toModel(addressDto);
+            addressService.update(address);
+            return AddressConverter.fromModel(address);
+        } catch (NullPointerException n) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        Address address = AddressConverter.toModel(addressDto);
-        try {
-            this.addressService.update(address);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return addressDto;
     }
 
     @DeleteMapping("/addresses/{id}")
     public void deleteAddress(@PathVariable String id) {
         try {
+            AddressConverter.fromModel(addressService.read(id));
             addressService.delete(id);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);

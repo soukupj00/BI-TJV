@@ -16,16 +16,18 @@ public class AddressService {
 
     public AddressService() {}
 
-    public void create(Address address) throws Exception {
-        if (Objects.equals(address.getCity(), "praha")) {
+    public Address create(Address address) throws Exception {
+        if (Objects.equals(address.getCity(), "brno")) {
             throw new Exception();
         }
+        return new Address(address.getCity(), address.getStreet(), address.getPostalCode(), address.getHouseNumber());
     }
 
-    public void update(Address address) throws Exception {
+    public Address update(Address address) throws Exception {
         if (Objects.equals(address.getCity(), "praha")) {
-            throw new Exception();
+            return new Address(address.getCity(), address.getStreet(), address.getPostalCode(), address.getHouseNumber());
         }
+        throw new Exception();
 
     }
 
@@ -47,7 +49,8 @@ public class AddressService {
 
     public void delete(String city) throws Exception {
         if (Objects.equals(city, "praha")) {
-            throw new Exception();
+            return;
         }
+        throw new Exception();
     }
 }
