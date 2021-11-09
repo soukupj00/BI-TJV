@@ -20,9 +20,9 @@ public class FitnessCenterDto implements Serializable { //Serializable may be us
     public FitnessCenterDto() {
     }
 
-    public FitnessCenterDto(String name, TypeOfFitnessCenter type) {
+    public FitnessCenterDto(String name, Integer type) {
         this.name = name;
-        this.type = type;
+        this.type = TypeOfFitnessCenter.fromInteger(type);
     }
 
     public String getName() {

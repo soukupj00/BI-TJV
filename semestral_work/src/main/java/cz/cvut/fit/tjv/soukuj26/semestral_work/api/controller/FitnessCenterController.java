@@ -41,7 +41,7 @@ public class FitnessCenterController {
         } catch (NullPointerException n) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         }catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
         }
     }
 
@@ -50,7 +50,7 @@ public class FitnessCenterController {
         try {
             FitnessCenterConverter.fromModel(fitnessCenterService.read(id));
             FitnessCenter fitnessCenter = FitnessCenterConverter.toModel(fitnessCenterDto);
-            this.fitnessCenterService.update(fitnessCenter);
+            fitnessCenterService.update(fitnessCenter);
             return FitnessCenterConverter.fromModel(fitnessCenter);
         } catch (NullPointerException n) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT);

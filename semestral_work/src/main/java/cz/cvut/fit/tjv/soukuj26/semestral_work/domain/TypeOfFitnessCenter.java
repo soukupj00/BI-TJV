@@ -5,5 +5,16 @@ public enum TypeOfFitnessCenter {
     STRONGMAN,
     POWERLIFTING,
     CROSSFIT,
-    BODYBUILDING
+    BODYBUILDING;
+
+    public static TypeOfFitnessCenter fromInteger(Integer i) {
+        return switch (i) {
+            case 1 -> ALL_PURPOSE;
+            case 2 -> STRONGMAN;
+            case 3 -> POWERLIFTING;
+            case 4 -> CROSSFIT;
+            case 5 -> BODYBUILDING;
+            default -> ALL_PURPOSE;
+        };
+    }
 }

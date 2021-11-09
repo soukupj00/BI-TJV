@@ -12,7 +12,7 @@ public class FitnessCenterConverter {
     }
 
     public static FitnessCenterDto fromModel(FitnessCenter fitnessCenter) {
-        return new FitnessCenterDto(fitnessCenter.getName(), fitnessCenter.getType());
+        return new FitnessCenterDto(fitnessCenter.getName(), fitnessCenter.getType().ordinal());
     }
 
     public static Collection<FitnessCenter> toModelMany(Collection<FitnessCenterDto> fitnessCenterDtos) {

@@ -42,7 +42,7 @@ public class MemberController {
         } catch (NullPointerException n) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
         }
     }
 
