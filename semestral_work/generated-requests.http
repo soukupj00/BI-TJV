@@ -221,17 +221,6 @@ Content-Type: application/json
 <> 2021-11-10T001835.404.json
 <> 2021-11-10T001233.404.json
 
-### Correct request //TODO WHY ISNT THIS WORKING
-PUT http://localhost:8080/fitness_centers/fitko
-Content-Type: application/json
-
-{
-  "name" : "fitko",
-  "type" : 4
-}
-
-<> 2021-11-10T003338.404.json
-<> 2021-11-10T003332.404.json
 
 ### Wrong request - not all atributes that require notNull are present
 PUT http://localhost:8080/fitness_centers/fitko
