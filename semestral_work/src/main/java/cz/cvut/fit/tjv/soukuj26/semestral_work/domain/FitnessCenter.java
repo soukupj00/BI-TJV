@@ -1,14 +1,33 @@
 package cz.cvut.fit.tjv.soukuj26.semestral_work.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Domain type Fitness center
+ * Domain type Fitness center. Its primary key is idFitnessCenter
  */
+@Entity(name = "Tjv_fitness_center")
 public class FitnessCenter implements Serializable { //Serializable may be used by ObjectInputStream and ObjectOutputStream
+    /**
+     * primary key of FitnessCenter
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_fitness_center")
+    private Integer idFitnessCenter;
 
+    /**
+     * Multiple fitness centers can be on same address
+     */
+    @ManyToOne
+    @JoinColumn(name = "fitness_center_address")
+    private Address address;
+
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "type", nullable = false)
     private TypeOfFitnessCenter type;
 
     public FitnessCenter() {
@@ -16,8 +35,8 @@ public class FitnessCenter implements Serializable { //Serializable may be used 
 
     /**
      * Store given name and type in the instance
-     * @param name given name; cannot be null
-     * @param type given type; cannot be null
+     * @param name cannot be null
+     * @param type cannot be null
      * @throws NullPointerException if given name or type is null
      */
     public FitnessCenter(String name, TypeOfFitnessCenter type) {
@@ -47,7 +66,7 @@ public class FitnessCenter implements Serializable { //Serializable may be used 
     }
 
     /**
-     * Compare this and another instance of FitnessCenter by name and type
+     * Compare this and another instance of FitnessCenter
      *
      * @param o other fitness center to compare
      * @return true if other instance is also FC and has the same attributes

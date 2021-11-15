@@ -1,27 +1,55 @@
 package cz.cvut.fit.tjv.soukuj26.semestral_work.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Domain type Staff. Its primary key is idStaff
+ */
+@Entity(name = "Tjv_staff")
 public class Staff implements Serializable {
+    /**
+     * primary key of Staff
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_staff")
+    private Integer idStaff;
 
-    private Integer personalNumber; //unique
+    @Column(name = "personal_number", nullable = false, unique = true)
+    private Integer personalNumber; //unique across Tjv_staff
+
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "language", nullable = false)
     private String language;
+
+    @Column(name = "salary", nullable = false)
     private Integer salary;
 
-    public Staff() {
-    }
-
-    public Staff(String name) {
-        this.name = Objects.requireNonNull(name);
-    }
-
+    /**
+     * Store given attributes in the instance
+     * @param personalNumber cannot be null
+     * @param name cannot be null
+     * @param language cannot be null
+     * @param salary cannot be null
+     * @throws NullPointerException if any attribute is null
+     */
     public Staff(Integer personalNumber, String name, String language, Integer salary) {
         this.personalNumber = Objects.requireNonNull(personalNumber);
         this.name = Objects.requireNonNull(name);
         this.language = Objects.requireNonNull(language);
         this.salary = Objects.requireNonNull(salary);
+    }
+
+    //TODO should not be here
+    public Staff(String name) {
+        this.name = Objects.requireNonNull(name);
+    }
+
+    public Staff() {
     }
 
     public Integer getPersonalNumber() {
@@ -56,6 +84,11 @@ public class Staff implements Serializable {
         this.salary = salary;
     }
 
+    /**
+     * Compares this and another instance of Staff by personalNumber
+     * @param o other Staff to compare
+     * @return true if personalNumbers are same
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

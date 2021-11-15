@@ -1,25 +1,50 @@
 package cz.cvut.fit.tjv.soukuj26.semestral_work.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Domain type Member. Its primary key is idMember
+ */
+@Entity(name = "Tjv_member")
 public class Member implements Serializable {
+    /**
+     * primary key of Member
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_member")
+    private Integer idMember;
 
-    private Integer personalNumber; //unique
+    @Column(name = "personal_number", nullable = false, unique = true)
+    private Integer personalNumber; //unique across Tjv_member
+
+    @Column(name = "email", nullable = false)
     private String email;
+
+    @Column(name = "name", nullable = false)
     private String name;
 
-    public Member() {
-    }
-
-    public Member(String name) {
-        this.name = name;
-    }
-
+    /**
+     * Store given attributes in the instance
+     * @param personalNumber cannot be null
+     * @param email cannot be null
+     * @param name cannot be null
+     * @throws NullPointerException if any attribute is null
+     */
     public Member(Integer personalNumber, String email, String name) {
         this.personalNumber = Objects.requireNonNull(personalNumber);
         this.email = Objects.requireNonNull(email);
         this.name = Objects.requireNonNull(name);
+    }
+
+    //TODO this should not be here
+    public Member(String name) {
+        this.name = name;
+    }
+
+    public Member() {
     }
 
     public Integer getPersonalNumber() {
@@ -46,6 +71,11 @@ public class Member implements Serializable {
         this.name = name;
     }
 
+    /**
+     * Compares this and another instance of Member by personalNumber
+     * @param o other Member to compare
+     * @return true if personalNumbers are same
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

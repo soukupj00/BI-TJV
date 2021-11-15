@@ -1,21 +1,42 @@
 package cz.cvut.fit.tjv.soukuj26.semestral_work.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Domain type Address. Its primary key is generated Id (Integer)
+ * Domain type Address. Its primary key is idAddress
  */
-
+@Entity(name = "Tjv_address")
 public class Address implements Serializable {
+    /**
+     * primary key of Address
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_address")
+    private Integer idAddress;
 
-
-    private Integer Id;
+    @Column(name = "city", nullable = false)
     private String city;
+
+    @Column(name = "street", nullable = false)
     private String street;
+
+    @Column(name = "postal_code", nullable = false)
     private String postalCode;
+
+    @Column(name = "house_number")
     private Integer houseNumber;
 
+    /**
+     * Store given parameters in the instance
+     * @param city cannot be null
+     * @param street cannot be null
+     * @param postalCode cannot be null
+     * @param houseNumber can be null
+     * @throws NullPointerException if city, street or postalCode is null
+     */
     public Address(String city, String street, String postalCode, Integer houseNumber) {
         this.city = Objects.requireNonNull(city);
         this.street = Objects.requireNonNull(street);
@@ -64,7 +85,7 @@ public class Address implements Serializable {
     }
 
     /**
-     * Compare this and another instance of Address by name and type
+     * Compare this and another instance of Address
      *
      * @param o other address to compare
      * @return true if other instance is also address and has the same attributes
