@@ -9,6 +9,8 @@ import java.util.Objects;
 
 public class Address implements Serializable {
 
+
+    private Integer Id;
     private String city;
     private String street;
     private String postalCode;
