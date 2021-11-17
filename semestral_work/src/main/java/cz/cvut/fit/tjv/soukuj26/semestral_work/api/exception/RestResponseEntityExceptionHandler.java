@@ -1,6 +1,6 @@
 package cz.cvut.fit.tjv.soukuj26.semestral_work.api.exception;
 
-import cz.cvut.fit.tjv.soukuj26.semestral_work.business.EntityStateException;
+import cz.cvut.fit.tjv.soukuj26.semestral_work.business.exceptions.EntityStateException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

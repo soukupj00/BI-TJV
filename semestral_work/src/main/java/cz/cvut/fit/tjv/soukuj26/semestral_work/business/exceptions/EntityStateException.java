@@ -1,4 +1,4 @@
-package cz.cvut.fit.tjv.soukuj26.semestral_work.business;
+package cz.cvut.fit.tjv.soukuj26.semestral_work.business.exceptions;
 
 /**
  * A checked exception indicating problem related to existence of an entity.

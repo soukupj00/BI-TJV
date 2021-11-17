@@ -2,7 +2,6 @@ package cz.cvut.fit.tjv.soukuj26.semestral_work.api.controller;
 
 import cz.cvut.fit.tjv.soukuj26.semestral_work.api.converter.StaffConverter;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.api.dtos.StaffDto;
-import cz.cvut.fit.tjv.soukuj26.semestral_work.api.exception.NoEntityFoundException;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.business.StaffService;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.Staff;
 import org.springframework.http.HttpStatus;

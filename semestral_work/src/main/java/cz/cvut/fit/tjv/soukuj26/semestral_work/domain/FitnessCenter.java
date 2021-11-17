@@ -21,6 +21,7 @@ public class FitnessCenter implements Serializable { //Serializable may be used 
     private String name;
 
     @Column(name = "type", nullable = false)
+    @Enumerated(EnumType.STRING)
     private TypeOfFitnessCenter type;
 
     /**

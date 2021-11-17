@@ -1,5 +1,6 @@
 package cz.cvut.fit.tjv.soukuj26.semestral_work.business;
 
+import cz.cvut.fit.tjv.soukuj26.semestral_work.dao.MemberJpaRepository;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.Member;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +13,7 @@ import java.util.Objects;
  * Business logic operations related to Member domain type.
  */
 @Component
-public class MemberService {
+public class MemberService extends AbstractCrudService<Member, Integer, MemberJpaRepository> {
 
     public MemberService() {}
 
@@ -36,6 +37,11 @@ public class MemberService {
             return new Member(name);
         }
         throw new Exception();
+    }
+
+    @Override
+    protected boolean exists(Integer entity) {
+        return false;
     }
 
     public Collection<Member> readAll () {

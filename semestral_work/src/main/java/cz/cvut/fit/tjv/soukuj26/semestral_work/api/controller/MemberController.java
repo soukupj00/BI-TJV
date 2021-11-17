@@ -1,7 +1,6 @@
 package cz.cvut.fit.tjv.soukuj26.semestral_work.api.controller;
 
 import cz.cvut.fit.tjv.soukuj26.semestral_work.api.converter.MemberConverter;
-import cz.cvut.fit.tjv.soukuj26.semestral_work.api.converter.StaffConverter;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.api.dtos.MemberDto;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.business.MemberService;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.Member;
