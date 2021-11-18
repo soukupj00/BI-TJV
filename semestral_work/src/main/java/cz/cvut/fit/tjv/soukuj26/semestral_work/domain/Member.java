@@ -3,6 +3,7 @@ package cz.cvut.fit.tjv.soukuj26.semestral_work.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Domain type Member. Its primary key is idMember
@@ -15,7 +16,7 @@ public class Member implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_member")
-    private Integer idMember;
+    private Long idMember;
 
     @Column(name = "personal_number", nullable = false, unique = true)
     private Integer personalNumber; //unique across Tjv_member
@@ -25,6 +26,9 @@ public class Member implements Serializable {
 
     @Column(name = "name", nullable = false)
     private String name;
+
+    @ManyToMany(mappedBy = "membersInFC")
+    private Set<FitnessCenter> myFitnessCenters;
 
     /**
      * Store given attributes in the instance

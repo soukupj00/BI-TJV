@@ -2,6 +2,8 @@ package cz.cvut.fit.tjv.soukuj26.semestral_work.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 
 /**
@@ -15,7 +17,7 @@ public class Address implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_address")
-    private Integer idAddress;
+    private Long idAddress;
 
     @Column(name = "city", nullable = false)
     private String city;
@@ -28,6 +30,9 @@ public class Address implements Serializable {
 
     @Column(name = "house_number")
     private Integer houseNumber;
+
+    @OneToMany(mappedBy = "address")
+    private Collection<FitnessCenter> myFitnessCenters;
 
     /**
      * Store given parameters in the instance

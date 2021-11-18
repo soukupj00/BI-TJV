@@ -2,7 +2,9 @@ package cz.cvut.fit.tjv.soukuj26.semestral_work.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Domain type Staff. Its primary key is idStaff
@@ -15,7 +17,7 @@ public class Staff implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_staff")
-    private Integer idStaff;
+    private Long idStaff;
 
     @Column(name = "personal_number", nullable = false, unique = true)
     private Integer personalNumber; //unique across Tjv_staff
@@ -28,6 +30,9 @@ public class Staff implements Serializable {
 
     @Column(name = "salary", nullable = false)
     private Integer salary;
+
+    @ManyToMany(mappedBy = "staffInFC")
+    private Set<FitnessCenter> myFitnessCenters;
 
     /**
      * Store given attributes in the instance
