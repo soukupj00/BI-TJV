@@ -10,5 +10,5 @@ import java.util.Collection;
 
 @Repository
 public interface StaffJpaRepository extends JpaRepository<Staff, Integer> {
-    Collection<Staff> findAllByMyFitnessCenters(FitnessCenter fitnessCenter);
+    Collection<Staff> findAllByMyFitnessCenters_Name(String fitnessCenterName);
 }

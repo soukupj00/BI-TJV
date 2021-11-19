@@ -17,7 +17,7 @@ public class Staff implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_staff")
-    private Long idStaff;
+    private Integer idStaff;
 
     @Column(name = "personal_number", nullable = false, unique = true)
     private Integer personalNumber; //unique across Tjv_staff
@@ -49,12 +49,11 @@ public class Staff implements Serializable {
         this.salary = Objects.requireNonNull(salary);
     }
 
-    //TODO should not be here
-    public Staff(String name) {
-        this.name = Objects.requireNonNull(name);
+    public Staff() {
     }
 
-    public Staff() {
+    public Integer getIdStaff() {
+        return idStaff;
     }
 
     public Integer getPersonalNumber() {

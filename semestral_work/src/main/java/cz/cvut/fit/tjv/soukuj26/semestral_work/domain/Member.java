@@ -16,7 +16,7 @@ public class Member implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_member")
-    private Long idMember;
+    private Integer idMember;
 
     @Column(name = "personal_number", nullable = false, unique = true)
     private Integer personalNumber; //unique across Tjv_member
@@ -43,12 +43,11 @@ public class Member implements Serializable {
         this.name = Objects.requireNonNull(name);
     }
 
-    //TODO this should not be here
-    public Member(String name) {
-        this.name = name;
+    public Member() {
     }
 
-    public Member() {
+    public Integer getIdMember() {
+        return idMember;
     }
 
     public Integer getPersonalNumber() {

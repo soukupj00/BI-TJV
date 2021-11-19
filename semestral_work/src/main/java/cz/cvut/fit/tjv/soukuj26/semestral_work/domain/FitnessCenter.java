@@ -1,6 +1,7 @@
 package cz.cvut.fit.tjv.soukuj26.semestral_work.domain;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.Serializable;
 import java.util.*;
 
@@ -15,7 +16,7 @@ public class FitnessCenter implements Serializable { //Serializable may be used 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_fitness_center")
-    private Long idFitnessCenter;
+    private Integer idFitnessCenter;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -36,8 +37,8 @@ public class FitnessCenter implements Serializable { //Serializable may be used 
      */
     @ManyToMany
     @JoinTable(name = "Tjv_fitness_center_staff",
-               joinColumns = @JoinColumn(name = "id_fitness_center"),
-               inverseJoinColumns = @JoinColumn(name = "id_staff")
+               joinColumns = @JoinColumn(name = "id_staff"),
+               inverseJoinColumns = @JoinColumn(name = "id_fitness_center")
               )
     private Set<Staff> staffInFC = new HashSet<>();
 
@@ -46,8 +47,8 @@ public class FitnessCenter implements Serializable { //Serializable may be used 
      */
     @ManyToMany
     @JoinTable(name = "Tjv_fitness_center_member",
-               joinColumns = @JoinColumn(name = "id_fitness_center"),
-               inverseJoinColumns = @JoinColumn(name = "id_member")
+               joinColumns = @JoinColumn(name = "id_member"),
+               inverseJoinColumns = @JoinColumn(name = "id_fitness_center")
               )
     private Set<Member> membersInFC = new HashSet<>();
 
@@ -65,8 +66,9 @@ public class FitnessCenter implements Serializable { //Serializable may be used 
         this.type = Objects.requireNonNull(type);
     }
 
-    public FitnessCenter(String aaa) {
-        this.name = aaa;
+
+    public Integer getIdFitnessCenter() {
+        return idFitnessCenter;
     }
 
     public String getName() {

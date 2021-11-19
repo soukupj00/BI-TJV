@@ -9,5 +9,5 @@ import java.util.Collection;
 
 @Repository
 public interface MemberJpaRepository extends JpaRepository<Member, Integer> {
-    Collection<Member> findAllByMyFitnessCenters(FitnessCenter fitnessCenter);
+    Collection<Member> findAllByMyFitnessCenters_Name(String fitnessCenterName);
 }

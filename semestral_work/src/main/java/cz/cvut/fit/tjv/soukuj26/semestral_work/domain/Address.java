@@ -17,7 +17,7 @@ public class Address implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_address")
-    private Long idAddress;
+    private Integer idAddress;
 
     @Column(name = "city", nullable = false)
     private String city;
@@ -53,8 +53,8 @@ public class Address implements Serializable {
 
     }
 
-    public Address(String city) {
-        this.city = city;
+    public Integer getIdAddress() {
+        return idAddress;
     }
 
     public String getCity() {

@@ -1,56 +1,55 @@
 package cz.cvut.fit.tjv.soukuj26.semestral_work.business;
 
+import cz.cvut.fit.tjv.soukuj26.semestral_work.business.exceptions.EntityStateException;
+import cz.cvut.fit.tjv.soukuj26.semestral_work.dao.StaffJpaRepository;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.Staff;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Business logic operations related to Staff domain type.
  */
 @Component
-public class StaffService {
+public class StaffService extends AbstractCrudService<Integer, Staff, StaffJpaRepository> {
 
-    public StaffService() {}
 
-    public Staff create(Staff staff) throws Exception {
-        if (Objects.equals(staff.getName(), "adam")) {
-            throw new Exception();
-        }
-        return new Staff(staff.getPersonalNumber(), staff.getName(), staff.getLanguage(), staff.getSalary());
+    protected StaffService(StaffJpaRepository repository) {
+        super(repository);
     }
 
-    public Staff update(Staff staff) throws Exception {
-        if (Objects.equals(staff.getName(), "david")) {
-            return new Staff(staff.getPersonalNumber(), staff.getName(), staff.getLanguage(), staff.getSalary());
-        }
-        throw new Exception();
-
+    @Override
+    protected boolean exists(Staff entity) {
+        return repository.existsById(entity.getIdStaff());
     }
 
-    public Staff read (String name) throws Exception {
-        if (Objects.equals(name, "david")) {
-            return new Staff(name);
-        }
-        throw new Exception();
+    //Finds all staff members in fitness center with given name
+    public Collection<Staff> findAllByFC (String name) {
+        return repository.findAllByMyFitnessCenters_Name(name);
     }
 
-    public Collection<Staff> readAll () {
-        List<Staff> tmp = new ArrayList<>();
-        Staff a = new Staff("anotherone");
-        Staff b = new Staff("someone");
-        tmp.add(a);
-        tmp.add(b);
-        return tmp;
+    @Override
+    public void create(Staff entity) throws EntityStateException {
+        super.create(entity);
     }
 
-    public void delete(String name) throws Exception {
-        if (Objects.equals(name, "david")) {
-            return;
-        }
-        throw new Exception();
+    @Override
+    public Optional<Staff> readById(Integer id) {
+        return super.readById(id);
+    }
+
+    @Override
+    public Collection<Staff> readAll() {
+        return super.readAll();
+    }
+
+    @Override
+    public void update(Staff entity) throws EntityStateException {
+        super.update(entity);
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        super.deleteById(id);
     }
 }
