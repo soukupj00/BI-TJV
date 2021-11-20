@@ -2,12 +2,14 @@ package cz.cvut.fit.tjv.soukuj26.semestral_work.api.controller;
 
 import cz.cvut.fit.tjv.soukuj26.semestral_work.api.converter.MemberConverter;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.api.dtos.MemberDto;
+import cz.cvut.fit.tjv.soukuj26.semestral_work.api.exception.NoEntityFoundException;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.business.MemberService;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.Member;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Collection;
 
 @RestController
@@ -24,9 +26,9 @@ public class MemberController {
     }
 
     @GetMapping("/member/{id}")
-    public MemberDto one(@PathVariable String id) {
+    public MemberDto one(@PathVariable Integer id) {
         try {
-            return MemberConverter.fromModel(memberService.read(id));
+            return MemberConverter.fromModel(memberService.readById(id).orElseThrow(NoEntityFoundException::new));
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -46,9 +48,9 @@ public class MemberController {
     }
 
     @PutMapping("/member/{id}")
-    MemberDto updateMember(@RequestBody MemberDto memberDto, @PathVariable String id) {
+    MemberDto updateMember(@RequestBody MemberDto memberDto, @PathVariable Integer id) {
         try {
-            memberService.read(id);
+            MemberConverter.fromModel(memberService.readById(id).orElseThrow(NoEntityFoundException::new));
             Member member = MemberConverter.toModel(memberDto);
             memberService.update(member);
             return MemberConverter.fromModel(member);
@@ -60,10 +62,10 @@ public class MemberController {
     }
 
     @DeleteMapping("/member/{id}")
-    public void deleteMember(@PathVariable String id) {
+    public void deleteMember(@PathVariable Integer id) {
         try {
-            MemberConverter.fromModel(memberService.read(id));
-            memberService.delete(id);
+            MemberConverter.fromModel(memberService.readById(id).orElseThrow(NoEntityFoundException::new));
+            memberService.deleteById(id);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

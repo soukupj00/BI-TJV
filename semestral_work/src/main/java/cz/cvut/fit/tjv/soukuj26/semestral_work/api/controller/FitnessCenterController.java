@@ -2,6 +2,7 @@ package cz.cvut.fit.tjv.soukuj26.semestral_work.api.controller;
 
 import cz.cvut.fit.tjv.soukuj26.semestral_work.api.converter.FitnessCenterConverter;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.api.dtos.FitnessCenterDto;
+import cz.cvut.fit.tjv.soukuj26.semestral_work.api.exception.NoEntityFoundException;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.business.FitnessCenterService;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.FitnessCenter;
 import org.springframework.http.HttpStatus;
@@ -24,9 +25,9 @@ public class FitnessCenterController {
     }
 
     @GetMapping("/fitness_centers/{id}")
-    public FitnessCenterDto one(@PathVariable String id) {
+    public FitnessCenterDto one(@PathVariable Integer id) {
         try {
-            return FitnessCenterConverter.fromModel(fitnessCenterService.read(id));
+            return FitnessCenterConverter.fromModel(fitnessCenterService.readById(id).orElseThrow(NoEntityFoundException::new));
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -46,9 +47,9 @@ public class FitnessCenterController {
     }
 
     @PutMapping("/fitness_centers/{id}")
-    FitnessCenterDto updateFitnessCenter(@RequestBody FitnessCenterDto fitnessCenterDto, @PathVariable String id) {
+    FitnessCenterDto updateFitnessCenter(@RequestBody FitnessCenterDto fitnessCenterDto, @PathVariable Integer id) {
         try {
-            FitnessCenterConverter.fromModel(fitnessCenterService.read(id));
+            FitnessCenterConverter.fromModel(fitnessCenterService.readById(id).orElseThrow(NoEntityFoundException::new));
             FitnessCenter fitnessCenter = FitnessCenterConverter.toModel(fitnessCenterDto);
             fitnessCenterService.update(fitnessCenter);
             return FitnessCenterConverter.fromModel(fitnessCenter);
@@ -60,10 +61,10 @@ public class FitnessCenterController {
     }
 
     @DeleteMapping("/fitness_centers/{id}")
-    public void deleteFitnessCenter(@PathVariable String id) {
+    public void deleteFitnessCenter(@PathVariable Integer id) {
         try {
-            FitnessCenterConverter.fromModel(fitnessCenterService.read(id));
-            fitnessCenterService.delete(id);
+            FitnessCenterConverter.fromModel(fitnessCenterService.readById(id).orElseThrow(NoEntityFoundException::new));
+            fitnessCenterService.deleteById(id);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

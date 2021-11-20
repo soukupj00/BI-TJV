@@ -2,12 +2,14 @@ package cz.cvut.fit.tjv.soukuj26.semestral_work.api.controller;
 
 import cz.cvut.fit.tjv.soukuj26.semestral_work.api.converter.AddressConverter;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.api.dtos.AddressDto;
+import cz.cvut.fit.tjv.soukuj26.semestral_work.api.exception.NoEntityFoundException;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.business.AddressService;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.Address;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Collection;
 
 @RestController
@@ -24,9 +26,9 @@ public class AddressController {
 
     //Gets AddressDTO with corresponding id from TODO database
     @GetMapping("/addresses/{id}")
-    public AddressDto one(@PathVariable String id) {
+    public AddressDto one(@PathVariable Integer id) {
         try {
-            return AddressConverter.fromModel(addressService.read(id));
+            return AddressConverter.fromModel(addressService.readById(id).orElseThrow(NoEntityFoundException::new));
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -48,9 +50,9 @@ public class AddressController {
 
     //Updates address with corresponding id
     @PutMapping("/addresses/{id}")
-    public AddressDto updateAddress(@RequestBody AddressDto addressDto, @PathVariable String id) {
+    public AddressDto updateAddress(@RequestBody AddressDto addressDto, @PathVariable Integer id) {
         try {
-            AddressConverter.fromModel(addressService.read(id));
+            AddressConverter.fromModel(addressService.readById(id).orElseThrow(NoEntityFoundException::new));
             Address address = AddressConverter.toModel(addressDto);
             addressService.update(address);
             return AddressConverter.fromModel(address);
@@ -62,10 +64,10 @@ public class AddressController {
     }
 
     @DeleteMapping("/addresses/{id}")
-    public void deleteAddress(@PathVariable String id) {
+    public void deleteAddress(@PathVariable Integer id) {
         try {
-            AddressConverter.fromModel(addressService.read(id));
-            addressService.delete(id);
+            AddressConverter.fromModel(addressService.readById(id).orElseThrow(NoEntityFoundException::new));
+            addressService.deleteById(id);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
