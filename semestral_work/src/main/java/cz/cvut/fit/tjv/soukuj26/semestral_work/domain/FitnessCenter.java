@@ -1,22 +1,21 @@
 package cz.cvut.fit.tjv.soukuj26.semestral_work.domain;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.Serializable;
 import java.util.*;
 
 /**
  * Domain type Fitness center. Its primary key is idFitnessCenter
  */
-@Entity(name = "Tjv_fitness_center")
+@Entity(name = "tjv_fitness_center")
 public class FitnessCenter implements Serializable { //Serializable may be used by ObjectInputStream and ObjectOutputStream
     /**
      * primary key of FitnessCenter
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id_fitness_center")
-    private Integer idFitnessCenter;
+    private Integer idFitnessCenter = 0;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -37,20 +36,10 @@ public class FitnessCenter implements Serializable { //Serializable may be used 
      */
     @ManyToMany
     @JoinTable(name = "Tjv_fitness_center_staff",
-               joinColumns = @JoinColumn(name = "id_staff"),
-               inverseJoinColumns = @JoinColumn(name = "id_fitness_center")
+               joinColumns = @JoinColumn(name = "id_fitness_center"),
+               inverseJoinColumns = @JoinColumn(name = "id_staff")
               )
     private Set<Staff> staffInFC = new HashSet<>();
-
-    /**
-     * Members that are in club in this fitness center. Each member can be in club in this place only once
-     */
-    @ManyToMany
-    @JoinTable(name = "Tjv_fitness_center_member",
-               joinColumns = @JoinColumn(name = "id_member"),
-               inverseJoinColumns = @JoinColumn(name = "id_fitness_center")
-              )
-    private Set<Member> membersInFC = new HashSet<>();
 
     public FitnessCenter() {
     }
@@ -87,6 +76,14 @@ public class FitnessCenter implements Serializable { //Serializable may be used 
         this.type = type;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     public Collection<Staff> getStaffInFC() {
         return Collections.unmodifiableCollection(staffInFC);
     }
@@ -98,19 +95,6 @@ public class FitnessCenter implements Serializable { //Serializable may be used 
      */
     public void addStaff(Staff staff) {
         staffInFC.add(Objects.requireNonNull(staff));
-    }
-
-    public Collection<Member> getMembersInFC() {
-        return Collections.unmodifiableCollection(membersInFC);
-    }
-
-    /**
-     * Add given member among those who are in club in this fitness center.
-     * @param member member to add
-     * @throws NullPointerException if the member is null
-     */
-    public void addMember(Member member) {
-        membersInFC.add(Objects.requireNonNull(member));
     }
 
     /**
@@ -134,8 +118,9 @@ public class FitnessCenter implements Serializable { //Serializable may be used 
 
     @Override
     public String toString() {
-        return "Fitness_center{" +
-                "name='" + name + '\'' +
+        return "FitnessCenter{" +
+                "idFitnessCenter=" + idFitnessCenter +
+                ", name='" + name + '\'' +
                 ", type=" + type +
                 '}';
     }

@@ -2,22 +2,20 @@ package cz.cvut.fit.tjv.soukuj26.semestral_work.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Objects;
 
 /**
  * Domain type Address. Its primary key is idAddress
  */
-@Entity(name = "Tjv_address")
+@Entity(name = "tjv_address")
 public class Address implements Serializable {
     /**
      * primary key of Address
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id_address")
-    private Integer idAddress;
+    private Integer idAddress = 0;
 
     @Column(name = "city", nullable = false)
     private String city;
@@ -30,9 +28,6 @@ public class Address implements Serializable {
 
     @Column(name = "house_number")
     private Integer houseNumber;
-
-    @OneToMany(mappedBy = "address")
-    private Collection<FitnessCenter> myFitnessCenters;
 
     /**
      * Store given parameters in the instance
@@ -111,7 +106,8 @@ public class Address implements Serializable {
     @Override
     public String toString() {
         return "Address{" +
-                "city='" + city + '\'' +
+                "idAddress=" + idAddress +
+                ", city='" + city + '\'' +
                 ", street='" + street + '\'' +
                 ", postalCode='" + postalCode + '\'' +
                 ", houseNumber=" + houseNumber +

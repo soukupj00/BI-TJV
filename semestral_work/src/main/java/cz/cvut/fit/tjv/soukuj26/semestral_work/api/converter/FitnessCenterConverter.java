@@ -7,12 +7,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class FitnessCenterConverter {
-    public static FitnessCenter toModel(FitnessCenterDto userDto) {
-        return new FitnessCenter(userDto.getName(), userDto.getType());
+    public static FitnessCenter toModel(FitnessCenterDto fitnessCenterDto) {
+        return new FitnessCenter(fitnessCenterDto.getName(), fitnessCenterDto.getType());
     }
 
     public static FitnessCenterDto fromModel(FitnessCenter fitnessCenter) {
-        return new FitnessCenterDto(fitnessCenter.getName(), fitnessCenter.getType().ordinal());
+        FitnessCenterDto toReturn = new FitnessCenterDto(fitnessCenter.getName(), fitnessCenter.getType().ordinal(), fitnessCenter.getAddress().getIdAddress());
+        toReturn.setIdFitnessCenter(fitnessCenter.getIdFitnessCenter());
+        return toReturn;
     }
 
     public static Collection<FitnessCenter> toModelMany(Collection<FitnessCenterDto> fitnessCenterDtos) {

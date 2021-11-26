@@ -5,7 +5,8 @@ import cz.cvut.fit.tjv.soukuj26.semestral_work.dao.StaffJpaRepository;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.Staff;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Optional;
 
 /**
  * Business logic operations related to Staff domain type.
@@ -25,7 +26,7 @@ public class StaffService extends AbstractCrudService<Integer, Staff, StaffJpaRe
 
     //Finds all staff members in fitness center with given name
     public Collection<Staff> findAllByFC (String name) {
-        return repository.findAllByMyFitnessCenters_Name(name);
+        return repository.findByFitnessCenterName(name);
     }
 
     @Override

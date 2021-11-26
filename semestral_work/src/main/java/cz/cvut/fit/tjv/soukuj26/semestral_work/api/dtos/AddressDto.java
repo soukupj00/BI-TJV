@@ -1,30 +1,26 @@
 package cz.cvut.fit.tjv.soukuj26.semestral_work.api.dtos;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import cz.cvut.fit.tjv.soukuj26.semestral_work.api.controller.Views;
-
 public class AddressDto {
 
-    @JsonView(Views.Public.class)
     private String city;
 
-    @JsonView(Views.Public.class)
     private String street;
 
-    @JsonView(Views.Public.class)
     private String postalCode;
 
-    @JsonView(Views.Public.class)
     private Integer houseNumber;
+
+    private Integer idAddress;
 
     public AddressDto() {
     }
 
-    public AddressDto(String city, String street, String postalCode, Integer houseNumber) {
+    public AddressDto(String city, String street, String postalCode, Integer houseNumber, Integer idAddress) {
         this.city = city;
         this.street = street;
         this.postalCode = postalCode;
         this.houseNumber = houseNumber;
+        this.idAddress = idAddress;
     }
 
     public String getCity() {
@@ -57,5 +53,13 @@ public class AddressDto {
 
     public void setHouseNumber(Integer houseNumber) {
         this.houseNumber = houseNumber;
+    }
+
+    public Integer getIdAddress() {
+        return idAddress;
+    }
+
+    public void setIdAddress(Integer idAddress) {
+        this.idAddress = idAddress;
     }
 }

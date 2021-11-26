@@ -3,10 +3,10 @@ package cz.cvut.fit.tjv.soukuj26.semestral_work.business;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.business.exceptions.EntityStateException;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.dao.AddressJpaRepository;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.Address;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Optional;
 
 /**
  * Business logic operations related to Address domain type.

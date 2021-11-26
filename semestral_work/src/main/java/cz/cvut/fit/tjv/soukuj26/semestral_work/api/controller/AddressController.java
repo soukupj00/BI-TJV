@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Collection;
 
 @RestController
@@ -18,19 +17,19 @@ public class AddressController {
 
     public AddressController(AddressService addressService) {this.addressService = addressService;}
 
-    //Gets all addresses from TODO database
+    //Gets all addresses from database
     @GetMapping("/addresses")
     public Collection<AddressDto> all() {
         return AddressConverter.fromModelMany(addressService.readAll());
     }
 
-    //Gets AddressDTO with corresponding id from TODO database
+    //Gets AddressDTO with corresponding id from database
     @GetMapping("/addresses/{id}")
     public AddressDto one(@PathVariable Integer id) {
         try {
             return AddressConverter.fromModel(addressService.readById(id).orElseThrow(NoEntityFoundException::new));
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Address with given ID was not found.");
         }
     }
 
@@ -42,9 +41,10 @@ public class AddressController {
             addressService.create(addressModel);
             return AddressConverter.fromModel(addressModel);
         } catch (NullPointerException n) {
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Required attribute of address is missing.");
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT);
+            System.out.println(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Entity with these attributes already exists in the database.");
         }
     }
 

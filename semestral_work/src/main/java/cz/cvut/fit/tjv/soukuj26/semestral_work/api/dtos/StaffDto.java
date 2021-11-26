@@ -1,30 +1,28 @@
 package cz.cvut.fit.tjv.soukuj26.semestral_work.api.dtos;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import cz.cvut.fit.tjv.soukuj26.semestral_work.api.controller.Views;
-
 public class StaffDto {
 
-    @JsonView(Views.Internal.class)
     private Integer personalNumber;
 
-    @JsonView(Views.Public.class)
     private String name;
 
-    @JsonView(Views.Public.class)
     private String language;
 
-    @JsonView(Views.Internal.class)
     private Integer salary;
+
+    private Integer idFitnessCenter;
+
+    private Integer idStaff;
 
     public StaffDto() {
     }
 
-    public StaffDto(Integer personalNumber, String name, String language, Integer salary) {
+    public StaffDto(Integer personalNumber, String name, String language, Integer salary, Integer idStaff) {
         this.personalNumber = personalNumber;
         this.name = name;
         this.language = language;
         this.salary = salary;
+        this.idStaff = idStaff;
     }
 
     public Integer getPersonalNumber() {
@@ -43,6 +41,14 @@ public class StaffDto {
         return salary;
     }
 
+    public Integer getIdStaff() {
+        return idStaff;
+    }
+
+    public Integer getIdFitnessCenter() {
+        return idFitnessCenter;
+    }
+
     public void setPersonalNumber(Integer personalNumber) {
         this.personalNumber = personalNumber;
     }
@@ -57,5 +63,13 @@ public class StaffDto {
 
     public void setSalary(Integer salary) {
         this.salary = salary;
+    }
+
+    public void setIdStaff(Integer idStaff) {
+        this.idStaff = idStaff;
+    }
+
+    public void setIdFitnessCenter(Integer idFitnessCenter) {
+        this.idFitnessCenter = idFitnessCenter;
     }
 }

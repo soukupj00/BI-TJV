@@ -1,7 +1,5 @@
 package cz.cvut.fit.tjv.soukuj26.semestral_work.api.dtos;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import cz.cvut.fit.tjv.soukuj26.semestral_work.api.controller.Views;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.TypeOfFitnessCenter;
 
 import java.io.Serializable;
@@ -11,18 +9,21 @@ import java.io.Serializable;
  */
 public class FitnessCenterDto implements Serializable { //Serializable may be used by ObjectInputStream and ObjectOutputStream
 
-    @JsonView(Views.Public.class)
     private String name;
 
-    @JsonView(Views.Public.class)
     private TypeOfFitnessCenter type;
+
+    private Integer idAddress;
+
+    private Integer idFitnessCenter;
 
     public FitnessCenterDto() {
     }
 
-    public FitnessCenterDto(String name, Integer type) {
+    public FitnessCenterDto(String name, Integer type, Integer idAddress) {
         this.name = name;
         this.type = TypeOfFitnessCenter.fromInteger(type);
+        this.idAddress = idAddress;
     }
 
     public String getName() {
@@ -39,5 +40,21 @@ public class FitnessCenterDto implements Serializable { //Serializable may be us
 
     public void setType(TypeOfFitnessCenter type) {
         this.type = type;
+    }
+
+    public Integer getIdFitnessCenter() {
+        return idFitnessCenter;
+    }
+
+    public void setIdFitnessCenter(Integer idFitnessCenter) {
+        this.idFitnessCenter = idFitnessCenter;
+    }
+
+    public Integer getIdAddress() {
+        return idAddress;
+    }
+
+    public void setIdAddress(Integer idAddress) {
+        this.idAddress = idAddress;
     }
 }

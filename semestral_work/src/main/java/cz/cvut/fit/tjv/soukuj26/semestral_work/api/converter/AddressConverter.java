@@ -13,7 +13,7 @@ public class AddressConverter {
     }
 
     public static AddressDto fromModel(Address address) {
-        return new AddressDto(address.getCity(), address.getStreet(), address.getPostalCode(), address.getHouseNumber());
+        return new AddressDto(address.getCity(), address.getStreet(), address.getPostalCode(), address.getHouseNumber(), address.getIdAddress());
     }
 
     public static Collection<Address> toModelMany(Collection<AddressDto> addressDtos) {

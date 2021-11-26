@@ -13,7 +13,7 @@ public class StaffConverter {
     }
 
     public static StaffDto fromModel(Staff staff) {
-        return new StaffDto(staff.getPersonalNumber(), staff.getName(), staff.getLanguage(), staff.getSalary());
+        return new StaffDto(staff.getPersonalNumber(), staff.getName(), staff.getLanguage(), staff.getSalary(), staff.getIdStaff());
     }
 
     public static Collection<Staff> toModelMany(Collection<StaffDto> staffDtos) {
