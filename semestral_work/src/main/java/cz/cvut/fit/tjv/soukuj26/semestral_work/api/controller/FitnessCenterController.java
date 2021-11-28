@@ -1,10 +1,12 @@
 package cz.cvut.fit.tjv.soukuj26.semestral_work.api.controller;
 
 import cz.cvut.fit.tjv.soukuj26.semestral_work.api.converter.FitnessCenterConverter;
+import cz.cvut.fit.tjv.soukuj26.semestral_work.api.converter.StaffConverter;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.api.dtos.FitnessCenterDto;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.api.exception.NoEntityFoundException;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.business.AddressService;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.business.FitnessCenterService;
+import cz.cvut.fit.tjv.soukuj26.semestral_work.business.StaffService;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.Address;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.FitnessCenter;
 import org.springframework.http.HttpStatus;
@@ -18,10 +20,12 @@ import java.util.Optional;
 public class FitnessCenterController {
     private final FitnessCenterService fitnessCenterService;
     private final AddressService addressService;
+    private final StaffService staffService;
 
-    public FitnessCenterController(FitnessCenterService fitnessCenterService, AddressService addressService) {
+    public FitnessCenterController(FitnessCenterService fitnessCenterService, AddressService addressService, StaffService staffService) {
         this.fitnessCenterService = fitnessCenterService;
         this.addressService = addressService;
+        this.staffService = staffService;
     }
 
     @GetMapping("/fitness_centers")
@@ -45,7 +49,12 @@ public class FitnessCenterController {
      */
     @GetMapping("/fitness_centers/staff/{staff_id}")
     public Collection<FitnessCenter> readAllByStaffId (@PathVariable Integer staff_id) {
-        return fitnessCenterService.findByStaffId(staff_id);
+        try {
+            StaffConverter.fromModel(staffService.readById(staff_id).orElseThrow(NoEntityFoundException::new));
+            return fitnessCenterService.findByStaffId(staff_id);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Staff with given ID does not exist in the database.");
+        }
     }
 
     @PostMapping("/fitness_centers")
@@ -69,7 +78,7 @@ public class FitnessCenterController {
     FitnessCenterDto updateFitnessCenter(@RequestBody FitnessCenterDto fitnessCenterDto, @PathVariable Integer id) {
         try {
             Optional<FitnessCenter> fitnessCenter = fitnessCenterService.readById(id);
-            Optional<Address> address = addressService.readById(id);
+            Optional<Address> address = addressService.readById(fitnessCenterDto.getIdAddress());
 
             if (fitnessCenter.isEmpty()) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Fitness center with given ID does not exist in the database.");

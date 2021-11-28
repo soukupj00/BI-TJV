@@ -10,8 +10,6 @@ public class StaffDto {
 
     private Integer salary;
 
-    private Integer idFitnessCenter;
-
     private Integer idStaff;
 
     public StaffDto() {
@@ -45,10 +43,6 @@ public class StaffDto {
         return idStaff;
     }
 
-    public Integer getIdFitnessCenter() {
-        return idFitnessCenter;
-    }
-
     public void setPersonalNumber(Integer personalNumber) {
         this.personalNumber = personalNumber;
     }
@@ -67,9 +61,5 @@ public class StaffDto {
 
     public void setIdStaff(Integer idStaff) {
         this.idStaff = idStaff;
-    }
-
-    public void setIdFitnessCenter(Integer idFitnessCenter) {
-        this.idFitnessCenter = idFitnessCenter;
     }
 }

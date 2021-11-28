@@ -65,17 +65,6 @@ public class StaffController {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Staff with given ID does not exist in the database.");
             }
 
-            //add relation to fitness center with given id
-            if (staffDto.getIdFitnessCenter() != null) {
-                Optional<FitnessCenter> fitnessCenter = fitnessCenterService.readById(staffDto.getIdFitnessCenter());
-
-                if (fitnessCenter.isEmpty()) {
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Fitness center with given ID does not exist in the database.");
-                }
-
-                fitnessCenter.get().addStaff(staff.get());
-            }
-            //TODO give personal number?
             //update attributes of staff member
             staff.get().setPersonalNumber(staffDto.getPersonalNumber());
             staff.get().setName(staffDto.getName());
@@ -87,6 +76,34 @@ public class StaffController {
         } catch (NullPointerException n) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Not all attributes provided in request.");
         }
+    }
+
+    /**
+     * Create relation between staff member and fitness center
+     * @param id_staff staff to be added to fitness center
+     * @param id_fc fitness center ID for staff to be added in
+     * @return StaffDto of now added staff to fitness center
+     */
+    @PutMapping("/staff/{id_staff}/add_to_fc/{id_fc}")
+    StaffDto updateStaff(@PathVariable Integer id_staff, @PathVariable Integer id_fc) {
+        Optional<Staff> staff = staffService.readById(id_staff);
+        Optional<FitnessCenter> fitnessCenter = fitnessCenterService.readById(id_fc);
+
+        if (staff.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Staff with given ID does not exist in the database.");
+        }
+        if (fitnessCenter.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Fitness center with given ID does not exist in the database.");
+        }
+
+        //Add instances to both Sets
+        fitnessCenter.get().addStaff(staff.get());
+        staff.get().addToMyFitnessCenters(fitnessCenter.get());
+
+        fitnessCenterService.update(fitnessCenter.get());
+        staffService.update(staff.get());
+
+        return StaffConverter.fromModel(staff.get());
     }
 
     @DeleteMapping("/staff/{id}")

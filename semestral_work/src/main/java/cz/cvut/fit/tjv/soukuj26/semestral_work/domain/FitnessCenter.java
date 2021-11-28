@@ -15,7 +15,7 @@ public class FitnessCenter implements Serializable { //Serializable may be used 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id_fitness_center")
-    private Integer idFitnessCenter = 0;
+    private int idFitnessCenter;
 
     @Column(name = "name", nullable = false)
     private String name;

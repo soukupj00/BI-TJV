@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @RestController
 public class AddressController {
@@ -44,7 +45,7 @@ public class AddressController {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Required attribute of address is missing.");
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Entity with these attributes already exists in the database.");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Address with these attributes already exists in the database.");
         }
     }
 
@@ -52,14 +53,22 @@ public class AddressController {
     @PutMapping("/addresses/{id}")
     public AddressDto updateAddress(@RequestBody AddressDto addressDto, @PathVariable Integer id) {
         try {
-            AddressConverter.fromModel(addressService.readById(id).orElseThrow(NoEntityFoundException::new));
-            Address address = AddressConverter.toModel(addressDto);
-            addressService.update(address);
-            return AddressConverter.fromModel(address);
+            Optional<Address> address = addressService.readById(id);
+
+            if (address.isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Address with given ID does not exist in the database.");
+            }
+
+            //update attributes of address
+            address.get().setCity(addressDto.getCity());
+            address.get().setStreet(addressDto.getStreet());
+            address.get().setPostalCode(addressDto.getPostalCode());
+            address.get().setHouseNumber(addressDto.getHouseNumber());
+
+            addressService.update(address.get());
+            return AddressConverter.fromModel(address.get());
         } catch (NullPointerException n) {
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Required attribute of address is missing.");
         }
     }
 
@@ -69,7 +78,7 @@ public class AddressController {
             AddressConverter.fromModel(addressService.readById(id).orElseThrow(NoEntityFoundException::new));
             addressService.deleteById(id);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Address with given ID does not exist in the database.");
         }
     }
 }

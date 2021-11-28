@@ -8,6 +8,7 @@ import java.util.Collection;
 
 @Repository
 public interface FitnessCenterJpaRepository extends JpaRepository<FitnessCenter, Integer> {
+
     /**
      * Find all fitness centers where given staff member works at
      * @param staffId id of staff member

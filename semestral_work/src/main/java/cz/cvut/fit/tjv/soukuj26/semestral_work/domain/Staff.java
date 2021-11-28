@@ -17,7 +17,7 @@ public class Staff implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id_staff")
-    private Integer idStaff = 0;
+    private int idStaff;
 
     @Column(name = "personal_number", nullable = false, unique = true)
     private Integer personalNumber; //unique across Tjv_staff
@@ -30,6 +30,9 @@ public class Staff implements Serializable {
 
     @Column(name = "salary", nullable = false)
     private Integer salary;
+
+    @ManyToMany(mappedBy = "staffInFC")
+    Set<FitnessCenter> myFitnessCenters = new HashSet<>();
 
     /**
      * Store given attributes in the instance
@@ -83,6 +86,18 @@ public class Staff implements Serializable {
 
     public void setSalary(Integer salary) {
         this.salary = salary;
+    }
+
+    public Set<FitnessCenter> getMyFitnessCenters() {
+        return myFitnessCenters;
+    }
+
+    public void setMyFitnessCenters(Set<FitnessCenter> myFitnessCenters) {
+        this.myFitnessCenters = myFitnessCenters;
+    }
+
+    public void addToMyFitnessCenters(FitnessCenter fitnessCenter) {
+        this.myFitnessCenters.add(fitnessCenter);
     }
 
     /**
