@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.List;
 
 @Repository
 public interface StaffJpaRepository extends JpaRepository<Staff, Integer> {
@@ -16,6 +17,5 @@ public interface StaffJpaRepository extends JpaRepository<Staff, Integer> {
      * @param name given name
      * @return Collection of staff members
      */
-    Collection<Staff> findByMyFitnessCenters_NameEquals(String name);
-
+    Collection<Staff> findDistinctByMyFitnessCenters_NameEquals(String name);
 }

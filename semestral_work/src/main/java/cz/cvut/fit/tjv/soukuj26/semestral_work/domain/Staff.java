@@ -88,10 +88,6 @@ public class Staff implements Serializable {
         this.salary = salary;
     }
 
-    public Set<FitnessCenter> getMyFitnessCenters() {
-        return myFitnessCenters;
-    }
-
     /**
      * Compares this and another instance of Staff by personalNumber
      * @param o other Staff to compare
