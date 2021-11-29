@@ -96,9 +96,8 @@ public class StaffController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Fitness center with given ID does not exist in the database.");
         }
 
-        //Add instances to both Sets
+        //Add relation of staff and fitness center to database
         fitnessCenter.get().addStaff(staff.get());
-        staff.get().addToMyFitnessCenters(fitnessCenter.get());
 
         fitnessCenterService.update(fitnessCenter.get());
         staffService.update(staff.get());

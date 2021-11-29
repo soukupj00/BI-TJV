@@ -92,14 +92,6 @@ public class Staff implements Serializable {
         return myFitnessCenters;
     }
 
-    public void setMyFitnessCenters(Set<FitnessCenter> myFitnessCenters) {
-        this.myFitnessCenters = myFitnessCenters;
-    }
-
-    public void addToMyFitnessCenters(FitnessCenter fitnessCenter) {
-        this.myFitnessCenters.add(fitnessCenter);
-    }
-
     /**
      * Compares this and another instance of Staff by personalNumber
      * @param o other Staff to compare

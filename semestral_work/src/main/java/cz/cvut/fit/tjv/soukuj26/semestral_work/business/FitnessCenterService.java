@@ -30,7 +30,7 @@ public class FitnessCenterService extends AbstractCrudService<Integer, FitnessCe
      * @return instance of fitness center / empty
      */
     public Collection<FitnessCenter> findByStaffId (Integer id) {
-        return repository.findByStaffInFC_idStaff(id);
+        return repository.findAllFitnessCentersByStaffId(id);
     }
 
     @Override
