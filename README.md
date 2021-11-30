@@ -6,7 +6,7 @@ V programu jsou 3 entity - Address, FitnessCenter, Staff. V Gitu je přidaný sc
 \
 Jsem připojený na DBS databázi, můj program má v databázi nastaveno UPDATE, takže by data měli zůstat v databázi.\
 V databázi by měli být vložená data, i v dbs portálu mi tam zůstávají. Id jsou generovány automaticky pomocí SEQUENCE. \
-Jednotlivá id:\
+Jednotlivá id (zkoušel jsem mazat, proto nejsou id za sebou):
 *  1-4 pro adresy
 *  6-9 pro fitka
 *  11-15 pro zaměstnance
