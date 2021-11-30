@@ -1,4 +1,0 @@
-select s.* from tjv_staff s
-join tjv_fitness_center_staff fs on fs.id_staff=s.id_staff
-join tjv_fitness_center f on f.id_fitness_center=fs.id_fitness_center
-where f.name = 'Greatness'
