@@ -18,6 +18,7 @@ public class StaffService extends AbstractCrudService<Integer, Staff, StaffJpaRe
     protected StaffService(StaffJpaRepository repository) {
         super(repository);
     }
+    FitnessCenterService fitnessCenterService;
 
     @Override
     protected boolean exists(Staff entity) {

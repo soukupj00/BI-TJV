@@ -4,7 +4,9 @@ import cz.cvut.fit.tjv.soukuj26.semestral_work.api.converter.AddressConverter;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.api.dtos.AddressDto;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.api.exception.NoEntityFoundException;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.business.AddressService;
+import cz.cvut.fit.tjv.soukuj26.semestral_work.business.FitnessCenterService;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.Address;
+import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.FitnessCenter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,8 +17,11 @@ import java.util.Optional;
 @RestController
 public class AddressController {
     private final AddressService addressService;
+    private final FitnessCenterService fitnessCenterService;
 
-    public AddressController(AddressService addressService) {this.addressService = addressService;}
+    public AddressController(AddressService addressService, FitnessCenterService fitnessCenterService) {this.addressService = addressService;
+        this.fitnessCenterService = fitnessCenterService;
+    }
 
     //Gets all addresses from database
     @GetMapping("/addresses")
@@ -75,7 +80,18 @@ public class AddressController {
     @DeleteMapping("/addresses/{id}")
     public void deleteAddress(@PathVariable Integer id) {
         try {
-            AddressConverter.fromModel(addressService.readById(id).orElseThrow(NoEntityFoundException::new));
+            Address address = addressService.readById(id).orElseThrow(NoEntityFoundException::new);
+
+            /*
+            delete any fitness centers that are in relation with this address
+            explanation: fitness centers cannot be present in database without proper address
+             */
+            if (!address.getMyFitnessCenters().isEmpty()) {
+                for (FitnessCenter fitnessCenter : address.getMyFitnessCenters()) {
+                    fitnessCenterService.deleteById(fitnessCenter.getIdFitnessCenter());
+                }
+            }
+
             addressService.deleteById(id);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Address with given ID does not exist in the database.");

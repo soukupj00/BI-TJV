@@ -52,7 +52,7 @@ public class FitnessCenterController {
         try {
             StaffConverter.fromModel(staffService.readById(staff_id).orElseThrow(NoEntityFoundException::new));
             return fitnessCenterService.findByStaffId(staff_id);
-        } catch (Exception e) {
+        } catch (NoEntityFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Staff with given ID does not exist in the database.");
         }
     }

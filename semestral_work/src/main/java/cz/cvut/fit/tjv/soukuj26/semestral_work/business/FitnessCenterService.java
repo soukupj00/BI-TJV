@@ -3,9 +3,12 @@ package cz.cvut.fit.tjv.soukuj26.semestral_work.business;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.business.exceptions.EntityStateException;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.dao.FitnessCenterJpaRepository;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.FitnessCenter;
+import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.Staff;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Array;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -51,6 +54,13 @@ public class FitnessCenterService extends AbstractCrudService<Integer, FitnessCe
     @Override
     public void update(FitnessCenter entity) throws EntityStateException {
         super.update(entity);
+    }
+
+    public void removeStaffRelation (Staff staff) {
+        List<FitnessCenter> fitnessCenters = repository.findAll();
+        for (FitnessCenter fitnessCenter : fitnessCenters) {
+            fitnessCenter.removeStaff(staff);
+        }
     }
 
     @Override
