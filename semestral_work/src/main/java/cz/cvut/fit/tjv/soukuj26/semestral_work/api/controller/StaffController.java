@@ -108,7 +108,7 @@ public class StaffController {
     @DeleteMapping("/staff/{id}")
     public void deleteStaff(@PathVariable Integer id) {
         try {
-            StaffConverter.fromModel(staffService.readById(id).orElseThrow(NoEntityFoundException::new));
+            staffService.readById(id).orElseThrow(NoEntityFoundException::new);
             staffService.deleteById(id);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Staff with given ID does not exist in the database.");

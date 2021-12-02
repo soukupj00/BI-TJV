@@ -98,6 +98,15 @@ public class FitnessCenter implements Serializable { //Serializable may be used 
     }
 
     /**
+     * Remove given entity from relation
+     * @param staff staff to remove
+     */
+    public void removeStaff(Staff staff) {
+        staffInFC.remove(Objects.requireNonNull(staff));
+    }
+
+
+    /**
      * Compare this and another instance of FitnessCenter
      *
      * @param o other fitness center to compare

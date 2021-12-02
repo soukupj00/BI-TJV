@@ -31,7 +31,7 @@ public class Staff implements Serializable {
     @Column(name = "salary", nullable = false)
     private Integer salary;
 
-    @ManyToMany(mappedBy = "staffInFC")
+    @ManyToMany(mappedBy = "staffInFC", cascade = {CascadeType.DETACH})
     Set<FitnessCenter> myFitnessCenters = new HashSet<>();
 
     /**

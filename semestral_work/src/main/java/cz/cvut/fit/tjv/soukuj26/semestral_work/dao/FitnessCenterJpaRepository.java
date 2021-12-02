@@ -6,10 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Repository
 public interface FitnessCenterJpaRepository extends JpaRepository<FitnessCenter, Integer> {
-
     /**
      * Find all fitness centers where given staff member works at
      * @param idStaff id of staff member

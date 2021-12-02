@@ -60,6 +60,7 @@ public abstract class AbstractCrudService<K, E, R extends JpaRepository<E, K>> {
             throw new EntityStateException(entity);
     }
 
+    @Transactional
     public void deleteById(K id) {
         repository.deleteById(id);
     }
