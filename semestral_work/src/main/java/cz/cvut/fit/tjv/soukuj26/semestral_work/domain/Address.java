@@ -1,5 +1,7 @@
 package cz.cvut.fit.tjv.soukuj26.semestral_work.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -30,7 +32,8 @@ public class Address implements Serializable {
     @Column(name = "house_number")
     private Integer houseNumber;
 
-    @OneToMany(mappedBy = "address")
+    @JsonIgnore
+    @OneToMany(mappedBy = "address", fetch = FetchType.LAZY)
     private Set<FitnessCenter> myFitnessCenters;
 
     /**

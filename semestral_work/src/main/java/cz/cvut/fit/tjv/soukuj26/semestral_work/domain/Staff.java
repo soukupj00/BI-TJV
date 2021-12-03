@@ -1,5 +1,7 @@
 package cz.cvut.fit.tjv.soukuj26.semestral_work.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -31,7 +33,8 @@ public class Staff implements Serializable {
     @Column(name = "salary", nullable = false)
     private Integer salary;
 
-    @ManyToMany(mappedBy = "staffInFC")
+    @JsonIgnore
+    @ManyToMany(mappedBy = "staffInFC", fetch = FetchType.LAZY)
     Set<FitnessCenter> myFitnessCenters = new HashSet<>();
 
     /**
