@@ -93,8 +93,10 @@ public class AddressController {
             }
 
             addressService.deleteById(id);
-        } catch (Exception e) {
+        } catch (NoEntityFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Address with given ID does not exist in the database.");
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot remove address and fitness center from database while staff is assigned to fitness center with this address.");
         }
     }
 }
