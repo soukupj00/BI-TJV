@@ -7,6 +7,7 @@ import cz.cvut.fit.tjv.soukuj26.semestral_work.business.AddressService;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.business.FitnessCenterService;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.Address;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.FitnessCenter;
+import org.hibernate.LazyInitializationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
