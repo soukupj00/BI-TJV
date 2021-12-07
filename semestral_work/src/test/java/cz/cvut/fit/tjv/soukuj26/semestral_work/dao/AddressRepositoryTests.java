@@ -27,8 +27,7 @@ public class AddressRepositoryTests {
         Iterable<Address> addresses = addressJpaRepository.findAll();
         Assertions.assertThat(addresses).isNotEmpty();
 
-        addressJpaRepository.deleteAll();
-
+        addressJpaRepository.deleteById(address.getIdAddress());
         /*
             instances of address are present in the database, thankfully this test does not remove them
             from the main database, but cannot assert that database is empty, as shows next assertion
