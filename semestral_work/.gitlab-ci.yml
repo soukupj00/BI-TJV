@@ -6,20 +6,20 @@ stages:
 variables:
   IMAGE_NAME: "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME"
 
-#build-no-gradle:
-#    stage: build
-#    only:
-#        - java-syntax
-#        - pre-DI
-#        - DI-manual
-#    when: always
-#    image: openjdk:17-alpine
-#    script:
-#        - mkdir out/
-#        - cd src/
-#        - javac -d ../out/ cz/cvut/fit/tjv/social_network/cli/CliMain.java
-#        - cd ../
-#        - java -cp out/ cz.cvut.fit.tjv.social_network.cli.CliMain -lp
+build-no-gradle:
+    stage: build
+    only:
+        - java-syntax
+        - pre-DI
+        - DI-manual
+    when: always
+    image: openjdk:17-alpine
+    script:
+        - mkdir out/
+        - cd src/
+        - javac -d ../out/ cz/cvut/fit/tjv/soukuj26/semestral_work/SemestralFitnessCenterApplication.java
+        - cd ../
+        - java -cp out/ cz.cvut.fit.tjv.soukuj26.semestral_work.SemestralFitnessCenterApplication -lp
 
 build-gradle:
     stage: build
@@ -47,12 +47,12 @@ docker image:
       - docker build -t "$IMAGE_NAME" .
       - docker push "$IMAGE_NAME"
 
-deploy image:
-    image: debian:buster
-    stage: deploy
-    before_script:
-      - apt-get update
-      - apt-get install -y openssh-client sshpass
-      - echo "fittjvdeployer" > pass.txt
-    script:
-      - sshpass -f pass.txt ssh -oStrictHostKeyChecking=no deployer@46.101.137.140 sudo /opt/deploy-script.sh "$CI_PROJECT_NAMESPACE" "$CI_REGISTRY_USER" "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY" "$IMAGE_NAME"
+#deploy image:
+#   - image: debian:buster
+#   stage: deploy
+#   before_script:
+#      - apt-get update
+#      - apt-get install -y openssh-client sshpass
+#      - echo "fittjvdeployer" > pass.txt
+#    script:
+#      - sshpass -f pass.txt ssh -oStrictHostKeyChecking=no deployer@46.101.137.140 sudo /opt/deploy-script.sh "$CI_PROJECT_NAMESPACE" "$CI_REGISTRY_USER" "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY" "$IMAGE_NAME"
