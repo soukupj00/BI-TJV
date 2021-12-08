@@ -1,8 +1,5 @@
 package cz.cvut.fit.tjv.soukuj26.semestral_work.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-
 import cz.cvut.fit.tjv.soukuj26.semestral_work.business.StaffService;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.dao.StaffJpaRepository;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.Staff;
@@ -15,6 +12,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class StaffServiceTests {

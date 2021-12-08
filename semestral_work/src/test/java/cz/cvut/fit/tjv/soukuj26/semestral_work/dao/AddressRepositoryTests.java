@@ -1,7 +1,6 @@
 package cz.cvut.fit.tjv.soukuj26.semestral_work.dao;
 
 import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.Address;
-import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.Staff;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -6,7 +6,6 @@ import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.FitnessCenter;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.Staff;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
