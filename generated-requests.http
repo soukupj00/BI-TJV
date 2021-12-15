@@ -1,0 +1,248 @@
+#ADDRESS API REQUESTS
+
+### Correct request - now returns dummy values
+GET http://localhost:8080/addresses
+
+### Correct request
+GET http://localhost:8080/addresses/5
+
+<> 2021-11-09T215334.200.json
+
+### Wrong request - NOT FOUND
+GET http://localhost:8080/addresses/brno
+
+### Correct request
+POST http://localhost:8080/addresses
+Content-Type: application/json
+
+{
+  "city" : "jicin",
+  "street" : "stara",
+  "postalCode" : "506 06",
+  "houseNumber" : 123
+}
+
+<> 2021-11-10T001949.200.json
+
+### Wrong request - not all atributes that require notNull are present
+POST http://localhost:8080/addresses
+Content-Type: application/json
+
+{
+  "city" : "brno",
+  "postalCode" : "120 06",
+  "houseNumber" : 3333
+}
+
+### Wrong request - address with id "brno" already present in database
+POST http://localhost:8080/addresses
+Content-Type: application/json
+
+{
+  "city" : "brno",
+  "postalCode" : "120 06"
+}
+
+<> 2021-11-10T002003.409.json
+
+### Correct request
+PUT http://localhost:8080/addresses/praha
+Content-Type: application/json
+
+{
+  "city" : "praha",
+  "street" : "nova",
+  "postalCode" : "123 05",
+  "houseNumber" : 9999
+}
+
+### Wrong request - not all atributes that require notNull are present
+PUT http://localhost:8080/addresses/praha
+Content-Type: application/json
+
+{
+  "city" : "praha",
+  "postalCode" : "123 05",
+  "houseNumber" : 9999
+}
+
+### Wrong request - NOT FOUND
+PUT http://localhost:8080/addresses/praha
+Content-Type: application/json
+
+{
+  "city" : "ccc",
+  "street" : "nova",
+  "postalCode" : "123 05",
+  "houseNumber" : 9999
+}
+
+### Correct request
+DELETE http://localhost:8080/addresses/praha
+
+### Wrong request - NOT FOUND
+DELETE http://localhost:8080/addresses/olomouc
+
+###################################################
+#POST API REQUESTS
+
+### Correct request
+GET http://localhost:8080/staff
+
+### Correct request
+GET http://localhost:8080/staff/david
+
+### Wrong request - NOT FOUND
+GET http://localhost:8080/staff/someoneElse
+
+### Correct request
+POST http://localhost:8080/staff
+Content-Type: application/json
+
+{
+  "personalNumber" : 1,
+  "language" : "czech",
+  "salary" : 1000,
+  "name" : "aaa"
+}
+
+### Wrong request - not all atributes that require notNull are present
+POST http://localhost:8080/staff
+Content-Type: application/json
+
+{
+  "name" : "Pepik"
+}
+
+### Wrong request - someone with id "adam" already in database
+POST http://localhost:8080/staff
+Content-Type: application/json
+
+{
+  "personalNumber" : 1,
+  "language" : "czech",
+  "salary" : 1000,
+  "name" : "adam"
+}
+
+<> 2021-11-10T002116.409.json
+
+### Correct request
+PUT http://localhost:8080/staff/david
+Content-Type: application/json
+
+{
+  "personalNumber" : 432,
+  "language" : "english",
+  "salary" : 10000,
+  "name" : "david"
+}
+
+### Wrong request - not all atributes that require notNull are present
+PUT http://localhost:8080/staff/david
+Content-Type: application/json
+
+{
+  "language" : "english",
+  "salary" : 10000,
+  "name" : "david"
+}
+
+### Wrong request - NOT FOUND
+PUT http://localhost:8080/staff/pepa
+Content-Type: application/json
+
+{
+  "personalNumber" : 432,
+  "language" : "english",
+  "salary" : 10000,
+  "name" : "david"
+}
+
+
+<> 2021-11-10T002144.404.json
+
+### Correct request
+DELETE http://localhost:8080/staff/david
+
+### Wrong request - NOT FOUND
+DELETE http://localhost:8080/staff/pepik
+
+###################################################
+#FITNESS CENTER API REQUESTS
+
+### Correct request
+GET http://localhost:8080/fitness_centers
+
+### Correct request
+GET http://localhost:8080/fitness_centers/50
+
+### Wrong request - NOT FOUND
+GET http://localhost:8080/fitness_centers/fit
+
+### Correct request
+POST http://localhost:8080/fitness_centers
+Content-Type: application/json
+
+{
+  "name" : "buldozer",
+  "type" : 4,
+  "id_address" : 1
+}
+
+<> 2021-11-10T003612.200.json
+<> 2021-11-10T003607.200.json
+<> 2021-11-10T003555.200.json
+<> 2021-11-10T003549.200.json
+<> 2021-11-10T003523.200.json
+<> 2021-11-10T001819.200.json
+
+### Wrong request - not all atributes that require notNull are present
+POST http://localhost:8080/fitness_centers
+Content-Type: application/json
+
+{
+  "type" : 1
+}
+
+### Wrong request - someone with id "fit" already in database
+POST http://localhost:8080/fitness_centers
+Content-Type: application/json
+
+{
+  "name" : "fit",
+  "type" : 4
+}
+
+<> 2021-11-10T003142.409.json
+<> 2021-11-10T002242.404.json
+<> 2021-11-10T002159.404.json
+<> 2021-11-10T001835.404.json
+<> 2021-11-10T001233.404.json
+
+
+### Wrong request - not all atributes that require notNull are present
+PUT http://localhost:8080/fitness_centers/fitko
+Content-Type: application/json
+
+{
+  "name" : "fitko"
+}
+
+### Wrong request - NOT FOUND
+PUT http://localhost:8080/fitness_centers/fajne
+Content-Type: application/json
+
+{
+  "name" : "fajne",
+  "type" : 2
+}
+
+<> 2021-11-10T003826.404.json
+
+
+### Correct request
+DELETE http://localhost:8080/fitness_centers/fitko
+
+### Wrong request - NOT FOUND
+DELETE http://localhost:8080/fitness_centers/somethingElse
