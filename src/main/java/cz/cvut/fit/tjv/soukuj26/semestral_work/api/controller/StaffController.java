@@ -39,9 +39,9 @@ public class StaffController {
         }
     }
 
-    @GetMapping("/staff/fitness_center/{fc_name}")
-    public Collection<StaffDto> staffByFitnessName(@PathVariable String fc_name) {
-        return StaffConverter.fromModelMany(staffService.findAllByFC(fc_name));
+    @GetMapping("/staff/fitness_center/{fc_id}")
+    public Collection<StaffDto> staffByFitnessName(@PathVariable Integer fc_id) {
+        return StaffConverter.fromModelMany(staffService.findAllByFC(fc_id));
     }
 
     @PostMapping("/staff")

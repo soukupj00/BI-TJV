@@ -25,9 +25,9 @@ public class StaffService extends AbstractCrudService<Integer, Staff, StaffJpaRe
         return repository.existsById(entity.getIdStaff());
     }
 
-    //Finds all staff members in fitness center with given name
-    public Collection<Staff> findAllByFC (String name) {
-        return repository.findDistinctByMyFitnessCenters_NameEquals(name);
+    //Finds all staff members in fitness center with given id
+    public Collection<Staff> findAllByFC (int id) {
+        return repository.findByMyFitnessCenters_IdFitnessCenterEquals(id);
     }
 
     @Override

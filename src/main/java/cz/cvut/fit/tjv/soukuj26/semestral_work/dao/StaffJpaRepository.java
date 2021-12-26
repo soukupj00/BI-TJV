@@ -10,9 +10,10 @@ import java.util.Collection;
 public interface StaffJpaRepository extends JpaRepository<Staff, Integer> {
 
     /**
-     * Finds all staff members in database that work in fitness center with given name in "name"
-     * @param name given name
+     * Finds all staff members in database that work in fitness center with given id
+     * @param idFitnessCenter given id
      * @return Collection of staff members
      */
-    Collection<Staff> findDistinctByMyFitnessCenters_NameEquals(String name);
+    Collection<Staff> findByMyFitnessCenters_IdFitnessCenterEquals(int idFitnessCenter);
+
 }
