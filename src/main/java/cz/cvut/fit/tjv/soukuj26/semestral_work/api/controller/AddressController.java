@@ -14,12 +14,14 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Collection;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class AddressController {
     private final AddressService addressService;
     private final FitnessCenterService fitnessCenterService;
 
-    public AddressController(AddressService addressService, FitnessCenterService fitnessCenterService) {this.addressService = addressService;
+    public AddressController(AddressService addressService, FitnessCenterService fitnessCenterService) {
+        this.addressService = addressService;
         this.fitnessCenterService = fitnessCenterService;
     }
 
@@ -38,6 +40,7 @@ public class AddressController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Address with given ID was not found.");
         }
     }
+
 
     //Creates new address
     @PostMapping("/addresses")
