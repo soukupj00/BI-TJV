@@ -1,6 +1,5 @@
-package cz.cvut.fit.tjv.soukuj26.semestral_work.service;
+package cz.cvut.fit.tjv.soukuj26.semestral_work.business;
 
-import cz.cvut.fit.tjv.soukuj26.semestral_work.business.StaffService;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.dao.StaffJpaRepository;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.Staff;
 import org.junit.jupiter.api.Test;
@@ -48,8 +47,5 @@ public class StaffServiceTests {
         Staff staff = new Staff(1000,"petr", "czech", 18000);
         staffService.create(staff);
         verify(staffJpaRepository, times(1)).save(staff);
-
-
     }
-
 }

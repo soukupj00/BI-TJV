@@ -1,6 +1,7 @@
 package cz.cvut.fit.tjv.soukuj26.semestral_work.controller;
 
 import cz.cvut.fit.tjv.soukuj26.semestral_work.api.controller.AddressController;
+import cz.cvut.fit.tjv.soukuj26.semestral_work.api.dtos.AddressDto;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.business.AddressService;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.business.FitnessCenterService;
 import cz.cvut.fit.tjv.soukuj26.semestral_work.domain.Address;

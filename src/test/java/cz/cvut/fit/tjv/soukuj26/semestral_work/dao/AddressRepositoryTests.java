@@ -33,7 +33,7 @@ public class AddressRepositoryTests {
          */
 
         Iterable<Address> addressesAfterDelete = addressJpaRepository.findAll();
-        // instances in database that are present outside of this test
+        // instances in database that are present outside this test
         Assertions.assertThat(addressesAfterDelete).isNotEmpty();
     }
 }

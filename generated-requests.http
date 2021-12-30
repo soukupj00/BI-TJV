@@ -78,7 +78,7 @@ Content-Type: application/json
 }
 
 ### Correct request
-DELETE http://localhost:8080/addresses/praha
+DELETE http://localhost:8080/addresses/171
 
 ### Wrong request - NOT FOUND
 DELETE http://localhost:8080/addresses/olomouc
